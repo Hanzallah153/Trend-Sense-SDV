@@ -1,0 +1,11 @@
+keyword,category,current_interest,predicted_interest_30d,predicted_interest_90d,confidence_score,risk_level,time_to_mainstream,market_size_estimate,competition_level,key_drivers
+Virtual Reality Home Experience,Technology,78000,165750,341250,75,Low,1-2 months,7924616,High,"['Consumer demand', 'Celebrity endorsement', 'Health awareness']"
+Blockchain-powered smart contracts,Technology,16000,24800,42400,70,Medium,3-4 months,2993079,Medium,"['Technology advancement', 'Environmental concerns', 'Social media influence']"
+Personalized AI diet plans,Health,28000,50050,94150,67,High,4-6 months,7013102,Low,"['Economic factors', 'Health awareness', 'Cost reduction']"
+Regenerative agriculture techniques,Food,15000,25875,47625,62,High,3-4 months,507915,Medium,"['Health awareness', 'Social media influence', 'Technology advancement']"
+3D-printed home construction,Home,24000,46500,91500,89,Low,2-3 months,8440078,High,"['Health awareness', 'Celebrity endorsement', 'Cost reduction']"
+Carbon-neutral travel options,Travel,18000,15300,9900,91,High,4-6 months,1405104,High,"['Celebrity endorsement', 'Social media influence', 'Environmental concerns']"
+Virtual reality concerts and events,Entertainment,32000,66000,134000,82,Medium,3-4 months,9232327,Low,"['Consumer demand', 'Regulatory changes', 'Technology advancement']"
+Plant-based meat alternatives,Food,35000,70000,140000,78,High,1-2 months,9143909,High,"['Social media influence', 'Economic factors', 'Environmental concerns']"
+Climate-adaptive architecture,Home,14000,22750,40250,80,Low,1-2 months,7895749,High,"['Environmental concerns', 'Regulatory changes', 'Celebrity endorsement']"
+Personalized mental health apps,Health,23000,44850,88549,65,Medium,4-6 months,1023810,Medium,"['Economic factors', 'Regulatory changes', 'Social media influence']"
