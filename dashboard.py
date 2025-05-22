@@ -1,3 +1,4 @@
+import os
 import dash
 from dash import dcc, html, dash_table
 from dash.dependencies import Input, Output
@@ -9,7 +10,7 @@ from datetime import datetime
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP], title="TrendSense Dashboard", suppress_callback_exceptions=True)
 
-BASE_PATH = Path(r"C:\Users\HP\Desktop\Hanzallah-Hasam\Trend-Sense-SDV\generated_data")
+BASE_PATH = Path("generated_data")
 
 def load_data():
     return {
@@ -170,4 +171,6 @@ def update_dashboard(n_clicks):
     )
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8050)
+    port = int(os.environ.get("PORT", 8050))
+    app.run_server(debug=True, host="0.0.0.0", port=port)
+
