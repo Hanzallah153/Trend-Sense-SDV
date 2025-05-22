@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "devCommand": "npm install vega-lite",
   "builds": [
     {
       "src": "dashboard.py",
