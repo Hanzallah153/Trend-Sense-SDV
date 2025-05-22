@@ -2,17 +2,25 @@
   "version": 2,
   "builds": [
     {
-      "src": "dashboard.py",
+      "src": "app.py",
       "use": "@vercel/python",
-      "config": { 
+      "config": {
         "maxLambdaSize": "250mb"
       }
+    },
+    {
+      "src": "generated_data/*",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
+      "src": "/generated_data/(.*)",
+      "dest": "/generated_data/$1"
+    },
+    {
       "src": "/(.*)",
-      "dest": "dashboard.py"
+      "dest": "app.py"
     }
   ]
 }
