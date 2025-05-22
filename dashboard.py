@@ -2,40 +2,23 @@ import os
 import csv
 from dash import Dash, dcc, html, dash_table, Input, Output
 import dash_bootstrap_components as dbc
-import dash_vega_lite as dvl
+import plotly.graph_objects as go
 from pathlib import Path
 from datetime import datetime
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP], title="TrendSense Dashboard")
-
 BASE_PATH = Path("generated_data")
 
 def read_csv_dict(filename):
     with open(BASE_PATH / filename, newline='', encoding='utf-8') as f:
         return list(csv.DictReader(f))
 
-def generate_vega_lite_bar(data, x_key, y_key, title):
-    # Vega-Lite spec for a simple bar chart
-    spec = {
-        "data": {"values": data},
-        "mark": "bar",
-        "encoding": {
-            "x": {
-                "field": x_key,
-                "type": "nominal",
-                "axis": {"labelAngle": -45, "labelOverlap": "parity"}
-            },
-            "y": {
-                "field": y_key,
-                "type": "quantitative"
-            }
-        },
-        "title": title,
-        "width": "container",
-        "height": 300,
-        "autosize": {"type": "fit", "contains": "padding"}
-    }
-    return spec
+def get_bar_chart_go(data, x_key, y_key, title):
+    x_data = [row[x_key] for row in data]
+    y_data = [int(row[y_key]) for row in data]
+    fig = go.Figure(data=[go.Bar(x=x_data, y=y_data)])
+    fig.update_layout(title=title, margin=dict(t=50, b=30))
+    return fig
 
 app.layout = dbc.Container(fluid=True, children=[
     dbc.Row([
@@ -47,7 +30,7 @@ app.layout = dbc.Container(fluid=True, children=[
     ]),
     dcc.Tabs([
         dcc.Tab(label="Top Keywords", children=[
-            dvl.VegaLite(id="top-keywords-chart", spec={}, style={"height": "50vh"}),
+            dcc.Graph(id="top-keywords-chart", config={"displayModeBar": False}, style={"height": "50vh"}),
             dash_table.DataTable(
                 id="keywords-table",
                 page_size=10,
@@ -60,7 +43,7 @@ app.layout = dbc.Container(fluid=True, children=[
 ])
 
 @app.callback(
-    [Output("top-keywords-chart", "spec"),
+    [Output("top-keywords-chart", "figure"),
      Output("keywords-table", "data"),
      Output("keywords-table", "columns"),
      Output("last-updated", "children")],
@@ -68,16 +51,13 @@ app.layout = dbc.Container(fluid=True, children=[
 )
 def update_dashboard(n_clicks):
     data = read_csv_dict("trendsense_keywords.csv")
-    # Sort top 10 by search_volume as int
     top_data = sorted(data, key=lambda x: int(x["search_volume"]), reverse=True)[:10]
 
-    # Vega-Lite spec for bar chart
-    spec = generate_vega_lite_bar(top_data, "keyword", "search_volume", "Top 10 Keywords by Search Volume")
-
+    fig = get_bar_chart_go(top_data, "keyword", "search_volume", "Top 10 Keywords by Search Volume")
     columns = [{"name": col, "id": col} for col in data[0].keys()]
 
     return (
-        spec,
+        fig,
         data,
         columns,
         f"Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
