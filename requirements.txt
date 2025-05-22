@@ -1,3 +1,3 @@
 dash
-plotly
 dash-bootstrap-components
+dash-vega-lite
